@@ -1,0 +1,325 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 4rem;
+  color: white;
+}
+
+.brand-container {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.brand-name {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(45deg, #00b4d8, #90e0ef);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.brand-slogan {
+  font-size: 1.2rem;
+  color: #caf0f8;
+  margin-top: 0.5rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.upload-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 900px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.upload-container:hover {
+  transform: translateY(-5px);
+}
+
+.file-input-container {
+  margin-bottom: 2rem;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-input-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.file-input-label:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #00b4d8;
+}
+
+.submit-button {
+  background: linear-gradient(45deg, #00b4d8, #0077b6);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+}
+
+.submit-button:disabled {
+  background: linear-gradient(45deg, #718096, #4a5568);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error-message {
+  color: #ff6b6b;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 107, 107, 0.2);
+}
+
+.loading {
+  margin-top: 1.5rem;
+  color: #caf0f8;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 3px solid #caf0f8;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.status-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(0, 180, 216, 0.1);
+  color: #caf0f8;
+  border-radius: 10px;
+  font-size: 1rem;
+  border: 1px solid rgba(0, 180, 216, 0.2);
+}
+
+.server-status {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.anonymized-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.anonymized-header h3 {
+  margin: 0;
+}
+
+.download-pdf-button {
+  background: linear-gradient(45deg, #00b4d8, #0077b6);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.download-pdf-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+}
+
+.download-pdf-button:disabled {
+  background: linear-gradient(45deg, #718096, #4a5568);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.anonymized-text {
+  width: 100%;
+  margin: 2rem auto 0;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.anonymized-text h3 {
+  color: #caf0f8;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+.anonymized-text pre {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  border-radius: 10px;
+  color: #e0e0e0;
+  font-family: 'Consolas', 'Monaco', 'Fira Code', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: left;
+  max-height: 600px;
+  overflow-y: auto;
+  margin: 0;
+}
+
+.anonymized-text pre::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.anonymized-text pre::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.anonymized-text pre::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.anonymized-text pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add some responsive adjustments */
+@media (max-width: 768px) {
+  .brand-name {
+    font-size: 2.5rem;
+  }
+  
+  .brand-slogan {
+    font-size: 1rem;
+  }
+  
+  .upload-container {
+    padding: 1.5rem;
+    width: 95%;
+  }
+  
+  .file-input-label {
+    padding: 1.5rem;
+  }
+
+  .anonymized-text {
+    padding: 1rem;
+  }
+
+  .anonymized-text pre {
+    padding: 1rem;
+    font-size: 0.8rem;
+    max-height: 400px;
+  }
+
+  .anonymized-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .download-pdf-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Anonymizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .upload-section {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 4px;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PDF Anonymizer</h1>
+        <div class="upload-section">
+            <form id="uploadForm">
+                <input type="file" id="pdfFile" accept=".pdf" style="display: none;">
+                <button type="button" class="button" onclick="document.getElementById('pdfFile').click()">Select PDF File</button>
+                <button type="submit" class="button" style="margin-left: 10px;">Anonymize PDF</button>
+            </form>
+            <p id="fileName"></p>
+        </div>
+        <div id="loading" class="loading">
+            Processing... Please wait...
+        </div>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        document.getElementById('pdfFile').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No file selected';
+            document.getElementById('fileName').textContent = fileName;
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('pdfFile');
+            const file = fileInput.files[0];
+            const status = document.getElementById('status');
+            const loading = document.getElementById('loading');
+
+            if (!file) {
+                status.textContent = 'Please select a PDF file first.';
+                status.className = 'error';
+                status.style.display = 'block';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                loading.style.display = 'block';
+                status.style.display = 'none';
+
+                const response = await fetch('/anonymize-pdf', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to anonymize PDF');
+                }
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'anonymized.pdf';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+
+                status.textContent = 'PDF successfully anonymized and downloaded!';
+                status.className = 'success';
+            } catch (error) {
+                status.textContent = 'Error: ' + error.message;
+                status.className = 'error';
+            } finally {
+                loading.style.display = 'none';
+                status.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html> 
