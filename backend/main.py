@@ -46,14 +46,22 @@ OPENROUTER_HEADERS = {
 }
 
 # Configure CORS to be more permissive for development
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+ALLOWED_ORIGINS = [FRONTEND_URL]
+
+# Add additional origins if specified
+additional_origins = os.getenv("ADDITIONAL_ORIGINS")
+if additional_origins:
+    ALLOWED_ORIGINS.extend(additional_origins.split(","))
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins in development
-    allow_credentials=False,  # Set to False when allow_origins=["*"]
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-logger.info("CORS middleware configured")
+logger.info(f"CORS configured with allowed origins: {ALLOWED_ORIGINS}")
 
 # Add response headers middleware to handle CORS preflight
 @app.middleware("http")

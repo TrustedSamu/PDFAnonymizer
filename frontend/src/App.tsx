@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8001';
+
 function App() {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -13,7 +15,7 @@ function App() {
   // Add health check function
   const checkServerHealth = async () => {
     try {
-      const response = await fetch('http://localhost:8001/api/health');
+      const response = await fetch(`${API_URL}/api/health`);
       if (response.ok) {
         setServerStatus('connected');
         console.log('Backend server is running');
@@ -56,7 +58,7 @@ function App() {
       setDownloadingPdf(true);
       setStatus('Erstelle PDF...');
       
-      const response = await fetch('http://localhost:8001/api/create-pdf', {
+      const response = await fetch(`${API_URL}/api/create-pdf`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -112,7 +114,7 @@ function App() {
       console.log('Starting file upload to server...');
       setStatus('Lade Lebenslauf hoch und analysiere...');
       
-      const response = await fetch('http://localhost:8001/api/analyze-cv', {
+      const response = await fetch(`${API_URL}/api/analyze-cv`, {
         method: 'POST',
         body: formData,
       });
